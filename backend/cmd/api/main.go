@@ -5,7 +5,6 @@ import (
 	"goapi/internal/api/repository/DAL/SQLite"
 
 	//"goapi/internal/api/repository/DAL/PostgreSQL"
-	//"github.com/joho/godotenv"
 	"goapi/internal/api/server"
 	"goapi/internal/api/service"
 	"io"
@@ -14,6 +13,8 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/joho/godotenv"
 )
 
 // NewSimpleLogger creates a new log.Logger that writes to a file.
@@ -41,8 +42,16 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	/* Create a logger and database connection using SQLite */
+	// Create a logger
 	logger := NewSimpleLogger("production.log")
+
+	// load environment variables from .env file
+	err := godotenv.Load("../../.env")
+	if err != nil {
+		log.Println("No .env file found or error loading .env file, proceeding with environment variables.")
+	}
+
+	/* Create a database connection using SQLite */
 	db, err := SQLite.NewSqlite("production.db")
 	if err != nil {
 		logger.Println("Error setting up database:", err)
@@ -51,15 +60,9 @@ func main() {
 	defer db.Close()
 	dsType := service.SQLiteDataService
 	port := "8080"
-	/* Create a logger and database connection using SQLite */
+	/* Create a database connection using SQLite */
 
-	/* Create a logger and database connection using PostgreSQL
-	logger := NewSimpleLogger("production.log")
-	// load environment variables from .env file
-	err := godotenv.Load("../../.env")
-	if err != nil {
-		log.Println("No .env file found or error loading .env file, proceeding with environment variables.")
-	}
+	/* Create a database connection using PostgreSQL
 	dbURL := os.Getenv("EXTERNAL_DATABASE_URL")
 	if dbURL == "" {
 		logger.Println("Error setting up database: DATABASE_URL environment variable is not set")
@@ -78,7 +81,7 @@ func main() {
 		logger.Println("Error starting server: DATABASE_PORT environment variable is not set")
 		return
 	}
-	/* Create a logger and database connection using PostgreSQL */
+	/* Create a database connection using PostgreSQL */
 
 	// * Create a service factory and API server *
 	sf := service.NewServiceFactory(db, logger, ctx)
