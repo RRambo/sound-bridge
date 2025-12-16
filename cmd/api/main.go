@@ -46,7 +46,7 @@ func main() {
 	logger := NewSimpleLogger("production.log")
 
 	// load environment variables from .env file
-	err := godotenv.Load(".env")
+	err := godotenv.Load("../../.env")
 	if err != nil {
 		log.Println("No .env file found or error loading .env file, proceeding with environment variables.")
 	}
