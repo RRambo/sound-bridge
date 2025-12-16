@@ -1,0 +1,106 @@
+.alert-history-card {
+  margin-top: 24px;
+}
+
+.alert-history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.alert-history-header .card-title {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.history-icon {
+  font-size: 22px;
+}
+
+.alert-count-badge {
+  background-color: #EF5350;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.alert-history-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.alert-history-item {
+  display: flex;
+  gap: 16px;
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s;
+}
+
+.alert-history-item:last-child {
+  border-bottom: none;
+}
+
+.alert-history-item:hover {
+  background-color: #f5f5f5;
+}
+
+.alert-history-time {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 80px;
+  color: #666;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.time-icon {
+  font-size: 16px;
+}
+
+.alert-history-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.alert-history-room {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.room-icon {
+  font-size: 14px;
+}
+
+.alert-history-level {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.level-badge {
+  background-color: #FFEBEE;
+  color: #EF5350;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.exceeded-text {
+  color: #999;
+  font-size: 12px;
+}

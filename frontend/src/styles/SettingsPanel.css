@@ -1,0 +1,43 @@
+.settings-panel {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.settings-icon {
+    font-size: 1.2rem;
+    margin-right: 4px;
+}
+
+.card-title {
+    margin-bottom: 4px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.card-subtitle {
+    font-size: 0.875rem;
+}
+
+.form-range {
+    cursor: pointer;
+}
+
+.form-range::-webkit-slider-thumb {
+    background-color: #5F9EA0;
+}
+
+.form-range::-moz-range-thumb {
+    background-color: #5F9EA0;
+}
+
+.form-select:focus,
+.form-range:focus {
+    border-color: #5F9EA0;
+    box-shadow: 0 0 0 0.2rem rgba(95, 158, 160, 0.25);
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 0.4em 0.8em;
+}

@@ -29,4 +29,29 @@ go.work.sum
 
 # Editor/IDE
 # .idea/
-# .vscode/
+.vscode/
+
+bin/
+
+# frontend
+node_modules/
+package-lock.json
+build/
+dist/
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# production
+/build
+
+#SQLite
+production.log
+
+#docker
+node_modules
+frontendt/node_modules
+**/dist
+**/.git
+**/.env
