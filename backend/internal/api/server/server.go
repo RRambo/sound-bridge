@@ -9,7 +9,9 @@ import (
 	dataService "goapi/internal/api/service/data"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -67,10 +69,10 @@ func NewServer(ctx context.Context, sf *service.ServiceFactory, logger *log.Logg
 	// for serving legacy frontend files
 	// Main mux serves frontend static files and mounts API under /api/
 	mux := http.NewServeMux()
-	frontendDir := filepath.Join("..", "..", "..", "frontend")
+	frontendDir := filepath.Join("..", "..", "..", "frontend/build")
 	absFrontendDir, _ := filepath.Abs(frontendDir)
 	logger.Println("Serving frontend from:", absFrontendDir)
-	mux.Handle("/", http.FileServer(http.Dir(absFrontendDir)))
+	//mux.Handle("/", http.FileServer(http.Dir(frontendDir)))
 
 	// Apply authentication & common middleware to API
 	middlewares := []middleware.Middleware{
@@ -78,6 +80,39 @@ func NewServer(ctx context.Context, sf *service.ServiceFactory, logger *log.Logg
 		middleware.CommonMiddleware,
 	}
 	mux.Handle("/api/", http.StripPrefix("/api", middleware.ChainMiddleware(apiMux, middlewares...)))
+
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		// Normalize and remove leading slash so Join works correctly
+		reqPath := strings.TrimPrefix(filepath.Clean(r.URL.Path), "/")
+
+		// If root, serve index.html
+		if reqPath == "" {
+			http.ServeFile(w, r, filepath.Join(absFrontendDir, "index.html"))
+			return
+		}
+
+		// Candidate file path under the build dir
+		filePath := filepath.Join(absFrontendDir, reqPath)
+
+		// If file exists and is not a directory, serve it
+		if fi, err := os.Stat(filePath); err == nil && !fi.IsDir() {
+			// Optional: cache hashed static assets
+			if strings.HasPrefix(reqPath, "static/") || strings.Contains(reqPath, ".") {
+				w.Header().Set("Cache-Control", "public, max-age=31536000, immutable")
+			}
+			http.ServeFile(w, r, filePath)
+			return
+		}
+
+		// Fallback to index.html for client-side routing
+		indexPath := filepath.Join(absFrontendDir, "index.html")
+		if _, err := os.Stat(indexPath); err != nil {
+			http.Error(w, "index.html not found", http.StatusInternalServerError)
+			return
+		}
+		w.Header().Set("X-Content-Type-Options", "nosniff")
+		http.ServeFile(w, r, indexPath)
+	})
 
 	return &Server{
 		ctx:    ctx,

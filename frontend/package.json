@@ -1,8 +1,25 @@
 {
-  "name": "frontend-react",
+  "name": "soundbridge",
   "version": "0.1.0",
+  "description": "",
+  "main": "cmd/api/main.go",
   "proxy": "http://localhost:8080",
-  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RRambo/sound-bridge.git"
+  },
+  "author": "",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/RRambo/sound-bridge/issues"
+  },
+  "homepage": "https://github.com/RRambo/sound-bridge#readme",
   "dependencies": {
     "axios": "^1.13.2",
     "bootstrap": "^5.3.8",
@@ -18,12 +35,7 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
+  
   "eslintConfig": {
     "extends": [
       "react-app",

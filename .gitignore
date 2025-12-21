@@ -36,15 +36,11 @@ bin/
 # frontend
 node_modules/
 package-lock.json
-build/
 dist/
 .env
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# production
-/build
 
 #SQLite
 production.log
