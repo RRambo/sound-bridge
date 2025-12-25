@@ -1,7 +1,9 @@
 # Sound Bridge
 Build version of the noise meter server 'Sound Bridge', deployed in a cloud service.
-<br>You can test the service through this link: https://sound-bridge.onrender.com/
-<br>Data can be posted to 'https://sound-bridge.onrender.com/api/data'
+
+You can test the service through this link: https://sound-bridge.onrender.com/
+
+Data can be posted to 'https://sound-bridge.onrender.com/api/data'
 with the following headers
 <br>**Basic Authentication**: 
 <br>
@@ -9,14 +11,16 @@ username: kids_noisemeter_admin
 <br>
 password: passwordkids
 <br>**Content-Type:** application/json
-<br>
+
 And a **data model** that looks like this:
+```json
 {
     "sound_level": 67.45,
     "IsPeriodic": true
 }
+```
 ## Data Model
-The IsPeriodic field determines wether the data is for the chart or the current noise level (true=chart, false=current noise level).
+The IsPeriodic field determines whether the data is for the charts or the current noise level at the top of the UI (true=chart, false=current noise level).
 <br>Only the sound_level is required (a float between 0 and 150)
 ```json
 {
@@ -38,4 +42,4 @@ Educational project for Intelligent Devices course.
 
 ---
 
-**Last Updated:** 15/12/2025
+**Last Updated:** 25/12/2025
