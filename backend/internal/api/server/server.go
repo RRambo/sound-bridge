@@ -69,7 +69,7 @@ func NewServer(ctx context.Context, sf *service.ServiceFactory, logger *log.Logg
 	// for serving legacy frontend files
 	// Main mux serves frontend static files and mounts API under /api/
 	mux := http.NewServeMux()
-	frontendDir := filepath.Join("..", "..", "..", "frontend/build")
+	frontendDir := filepath.Join("..", "..", "..", "build")
 	absFrontendDir, _ := filepath.Abs(frontendDir)
 	logger.Println("Serving frontend from:", absFrontendDir)
 	//mux.Handle("/", http.FileServer(http.Dir(frontendDir)))

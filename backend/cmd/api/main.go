@@ -13,8 +13,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-
-	"github.com/joho/godotenv"
+	//"github.com/joho/godotenv"
 )
 
 // NewSimpleLogger creates a new log.Logger that writes to a file.
@@ -46,10 +45,10 @@ func main() {
 	logger := NewSimpleLogger("production.log")
 
 	// load environment variables from .env file
-	err := godotenv.Load("../../../.env")
+	/*err := godotenv.Load("../../../.env")
 	if err != nil {
 		log.Println("No .env file found or error loading .env file, proceeding with environment variables.")
-	}
+	}*/
 
 	/* Create a database connection using SQLite */
 	db, err := SQLite.NewSqlite("production.db")
