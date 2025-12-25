@@ -34,6 +34,7 @@ go.work.sum
 bin/
 
 # frontend
+frontend/
 node_modules/
 package-lock.json
 dist/
@@ -44,10 +45,3 @@ yarn-error.log*
 
 #SQLite
 production.log
-
-#docker
-node_modules
-frontendt/node_modules
-**/dist
-**/.git
-**/.env
