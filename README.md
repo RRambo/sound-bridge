@@ -12,10 +12,12 @@ password: passwordkids
 <br>
 And a **data model** that looks like this:
 {
-    "sound_level": 67.45
+    "sound_level": 67.45,
+    "IsPeriodic": true
 }
 ## Data Model
-Only the sound_level is required (a float between 0 and 150)
+The IsPeriodic field determines wether the data is for the chart or the current noise level (true=chart, false=current noise level).
+<br>Only the sound_level is required (a float between 0 and 150)
 ```json
 {
   "id": 1,
