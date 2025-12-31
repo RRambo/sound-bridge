@@ -8,6 +8,7 @@
 *.test
 *_test.go
 production.log
+*mocks.go
 
 .env
 
