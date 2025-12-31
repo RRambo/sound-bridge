@@ -1,5 +1,5 @@
 # Sound Bridge
-Build version of the [Noise Meter Server](https://github.com/RRambo/Noise-meter-server/) 'Sound Bridge', deployed in a cloud service.
+This repository only contains a **build version** of the [Noise Meter Server](https://github.com/RRambo/Noise-meter-server/) 'Sound Bridge', deployed in a cloud service.
 
 This web service is currently hosted in render and anyone can test it here [sound-bridge.onrender.com](https://sound-bridge.onrender.com/)
 
