@@ -1,8 +1,9 @@
 **/
 
+!images/
 !build/
-
 !backend/
+
 *.exe
 *.exe~
 *.test

@@ -38,6 +38,11 @@ Only the sound_level is required (a float between 0 and 150 `xx.xx`)
 }
 ```
 
+## Images of the UI (with data)
+![Screenshot of the User Interface with data including the daily summary.](<images/UI_Full.png>)
+
+![Screenshot of the User Interface with data including the weekly summary and quiet time.](<images/UI_WeeklySummary.png>)
+
 ## License
 
 Educational project for Intelligent Devices course.
