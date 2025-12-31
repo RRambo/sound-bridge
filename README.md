@@ -1,18 +1,20 @@
 # Sound Bridge
-Build version of the noise meter server 'Sound Bridge', deployed in a cloud service.
+Build version of the [Noise Meter Server](https://github.com/RRambo/Noise-meter-server/) 'Sound Bridge', deployed in a cloud service.
 
-You can test the service through this link: https://sound-bridge.onrender.com/
+This web service is currently hosted in render and anyone can test it here [sound-bridge.onrender.com](https://sound-bridge.onrender.com/)
+
+> The render instance used here is free and will spin down with inactivity, which can delay requests by 50+ seconds. 
 
 Data can be posted to 'https://sound-bridge.onrender.com/api/data'
-with the following headers
-<br>**Basic Authentication**: 
-<br>
+with the following headers  
+```
+Basic Authentication:
 username: kids_noisemeter_admin
-<br>
 password: passwordkids
-<br>**Content-Type:** application/json
 
-And a **data model** that looks like this:
+Content-Type: application/json
+```
+And a **request body** that looks like this:
 ```json
 {
     "sound_level": 67.45,
@@ -20,8 +22,8 @@ And a **data model** that looks like this:
 }
 ```
 ## Data Model
-The IsPeriodic field determines whether the data is for the charts or the current noise level at the top of the UI (true=chart, false=current noise level).
-<br>Only the sound_level is required (a float between 0 and 150 (xx.xx))
+The **IsPeriodic** field determines whether the data is for the charts or the current noise level at the top of the UI.<br> `true`=chart, `false`=current noise level  
+Only the sound_level is required (a float between 0 and 150 `xx.xx`)
 ```json
 {
   "id": 1,
@@ -42,4 +44,4 @@ Educational project for Intelligent Devices course.
 
 ---
 
-**Last Updated:** 25/12/2025
+**Last Updated:** 31/12/2025
