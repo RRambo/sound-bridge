@@ -15,7 +15,7 @@ password: passwordkids
 And a **data model** that looks like this:
 ```json
 {
-    "sound_level": 67.45,
+    "sound_level": 67.45, // xx.xx sound level in decibels as a float
     "IsPeriodic": true
 }
 ```
