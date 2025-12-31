@@ -4,14 +4,22 @@ import (
 	"context"
 	"encoding/json"
 	"goapi/internal/api/repository/models"
-	service "goapi/internal/api/service/data"
 	"log"
 	"net/http"
 	"strconv"
 	"time"
 )
 
-func GetLocationsHandler(w http.ResponseWriter, r *http.Request, logger *log.Logger, svc service.LocationService) {
+type LocationService interface {
+	CreateLocation(location *models.Location) error
+	GetAllLocations() ([]*models.Location, error)
+	GetChosenLocation() (*models.Location, error)
+	SetChosenLocation(id int) error
+	UpdateThreshold(id int, newThreshold float64) error
+	DeleteLocation(location *models.Location, ctx context.Context) (int64, error)
+}
+
+func GetLocationsHandler(w http.ResponseWriter, r *http.Request, logger *log.Logger, svc LocationService) {
 	locations, err := svc.GetAllLocations()
 	if err != nil {
 		logger.Println("Error getting locations:", err)
@@ -30,7 +38,7 @@ type LocationResponse struct {
 	Data    interface{} `json:"data"`
 }
 
-func GetChosenLocationHandler(w http.ResponseWriter, r *http.Request, logger *log.Logger, svc service.LocationService) {
+func GetChosenLocationHandler(w http.ResponseWriter, r *http.Request, logger *log.Logger, svc LocationService) {
 	w.Header().Set("Content-Type", "application/json")
 	location, err := svc.GetChosenLocation()
 	if err != nil {
@@ -56,7 +64,7 @@ func GetChosenLocationHandler(w http.ResponseWriter, r *http.Request, logger *lo
 	}
 }
 
-func CreateLocationHandler(w http.ResponseWriter, r *http.Request, logger *log.Logger, svc service.LocationService) {
+func CreateLocationHandler(w http.ResponseWriter, r *http.Request, logger *log.Logger, svc LocationService) {
 	var location models.Location
 	if err := json.NewDecoder(r.Body).Decode(&location); err != nil {
 		http.Error(w, `{"error": "Invalid request body"}`, http.StatusBadRequest)
@@ -75,7 +83,7 @@ func CreateLocationHandler(w http.ResponseWriter, r *http.Request, logger *log.L
 }
 
 // UpdateThresholdHandler and SetChosenLocationHandler combined
-func UpdateLocationHandler(w http.ResponseWriter, r *http.Request, logger *log.Logger, svc service.LocationService) {
+func UpdateLocationHandler(w http.ResponseWriter, r *http.Request, logger *log.Logger, svc LocationService) {
 	idStr := r.PathValue("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
@@ -113,7 +121,7 @@ func UpdateLocationHandler(w http.ResponseWriter, r *http.Request, logger *log.L
 	w.Write([]byte(`{"message": "Location updated"}`))
 }
 
-func SetChosenLocationHandler(w http.ResponseWriter, r *http.Request, logger *log.Logger, svc service.LocationService) {
+func SetChosenLocationHandler(w http.ResponseWriter, r *http.Request, logger *log.Logger, svc LocationService) {
 	idStr := r.PathValue("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
@@ -131,7 +139,7 @@ func SetChosenLocationHandler(w http.ResponseWriter, r *http.Request, logger *lo
 	w.Write([]byte(`{"message": "Chosen location updated"}`))
 }
 
-func DeleteHandler(w http.ResponseWriter, r *http.Request, logger *log.Logger, svc service.LocationService) {
+func DeleteHandler(w http.ResponseWriter, r *http.Request, logger *log.Logger, svc LocationService) {
 	idStr := r.PathValue("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {

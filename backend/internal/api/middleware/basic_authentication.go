@@ -62,7 +62,9 @@ func BasicAuthenticationMiddleware(next http.Handler) http.Handler {
 }
 
 func validateUser(username, password string) bool {
-	/*username = os.Getenv("BASIC_USER")
-	password = os.Getenv("BASIC_PASS")*/
+
+	// ! This is a dummy implementation, replace this with real authentication logic
+	// Need to do this still.
+	// By now I still leave it like this for testing. But changed the username and password.
 	return username == "kids_noisemeter_admin" && password == "passwordkids"
 }

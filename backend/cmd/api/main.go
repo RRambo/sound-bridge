@@ -3,8 +3,6 @@ package main
 import (
 	"context"
 	"goapi/internal/api/repository/DAL/SQLite"
-
-	//"goapi/internal/api/repository/DAL/PostgreSQL"
 	"goapi/internal/api/server"
 	"goapi/internal/api/service"
 	"io"
@@ -13,7 +11,6 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	//"github.com/joho/godotenv"
 )
 
 // NewSimpleLogger creates a new log.Logger that writes to a file.
@@ -37,63 +34,32 @@ func NewSimpleLogger(logFile string) *log.Logger {
 }
 
 func main() {
+
 	// * Timeout is used to gracefully shutdown the server *
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	// Create a logger
+	// * Create a logger and database connection *
 	logger := NewSimpleLogger("production.log")
-
-	// load environment variables from .env file
-	/*err := godotenv.Load("../../../.env")
-	if err != nil {
-		log.Println("No .env file found or error loading .env file, proceeding with environment variables.")
-	}*/
-
-	/* Create a database connection using SQLite */
 	db, err := SQLite.NewSqlite("production.db")
 	if err != nil {
 		logger.Println("Error setting up database:", err)
 		return
 	}
 	defer db.Close()
-	dsType := service.SQLiteDataService
-	port := "8080"
-	/* Create a database connection using SQLite */
-
-	/* Create a database connection using PostgreSQL
-	dbURL := os.Getenv("EXTERNAL_DATABASE_URL")
-	if dbURL == "" {
-		logger.Println("Error setting up database: DATABASE_URL environment variable is not set")
-		return
-	}
-	db, err := PostgreSQL.NewPostgreSQL(dbURL)
-	if err != nil {
-		logger.Println("Error setting up database:", err)
-		return
-	}
-	defer db.Close()
-	dsType := service.PostgreSQLDataService
-
-	port := os.Getenv("DATABASE_PORT")
-	if port == "" {
-		logger.Println("Error starting server: DATABASE_PORT environment variable is not set")
-		return
-	}
-	/* Create a database connection using PostgreSQL */
 
 	// * Create a service factory and API server *
 	sf := service.NewServiceFactory(db, logger, ctx)
 
 	// * Create the API server *
-	server := server.NewServer(ctx, sf, logger, dsType)
+	server := server.NewServer(ctx, sf, logger)
 
 	// * Setup graceful shutdown *
 	gracefullShutdown(server, cancel, logger)
 
 	// * Start the server *
-	logger.Println("Starting server on :" + port + "...")
-	if err := server.ListenAndServe(":" + port); err != nil {
+	logger.Println("Starting server on :8080...")
+	if err := server.ListenAndServe(":8080"); err != nil {
 		// If the server was shutdown gracefully, don't log a startup error
 		if err != http.ErrServerClosed {
 			logger.Println("Server startup error:", err)

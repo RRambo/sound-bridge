@@ -22,27 +22,21 @@ type Server struct {
 }
 
 // NewServer creates a new server instance
-func NewServer(ctx context.Context, sf *service.ServiceFactory, logger *log.Logger, serviceType service.DataServiceType) *Server {
+func NewServer(ctx context.Context, sf *service.ServiceFactory, logger *log.Logger) *Server {
 	// Create API mux
 	apiMux := http.NewServeMux()
 
 	// Create DataService
-	ds, err := sf.CreateDataService(serviceType)
+	ds, err := sf.CreateDataService(service.SQLiteDataService)
 	if err != nil {
 		logger.Fatalf("Error creating data service: %v", err)
-	}
-
-	// Create LocationService
-	ls, err := sf.CreateLocationService(serviceType)
-	if err != nil {
-		logger.Fatalf("Error creating location service: %v", err)
 	}
 
 	// Setup handlers
 	if err := setupDataHandlers(apiMux, logger, ds); err != nil {
 		logger.Fatalf("Error setting up data handlers: %v", err)
 	}
-	if err := setupLocationHandlers(apiMux, logger, ls); err != nil {
+	if err := setupLocationHandlers(apiMux, sf, logger); err != nil {
 		logger.Fatalf("Error setting up location handlers: %v", err)
 	}
 
@@ -72,7 +66,7 @@ func NewServer(ctx context.Context, sf *service.ServiceFactory, logger *log.Logg
 	frontendDir := filepath.Join("..", "..", "..", "build")
 	absFrontendDir, _ := filepath.Abs(frontendDir)
 	logger.Println("Serving frontend from:", absFrontendDir)
-	//mux.Handle("/", http.FileServer(http.Dir(frontendDir)))
+	// mux.Handle("/", http.FileServer(http.Dir(absFrontendDir)))
 
 	// Apply authentication & common middleware to API
 	middlewares := []middleware.Middleware{
@@ -82,7 +76,7 @@ func NewServer(ctx context.Context, sf *service.ServiceFactory, logger *log.Logg
 	mux.Handle("/api/", http.StripPrefix("/api", middleware.ChainMiddleware(apiMux, middlewares...)))
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		// Normalize and remove leading slash so Join works correctly
+		// Remove leading slash so Join works correctly
 		reqPath := strings.TrimPrefix(filepath.Clean(r.URL.Path), "/")
 
 		// If root, serve index.html
@@ -184,7 +178,12 @@ func setupDataHandlers(mux *http.ServeMux, logger *log.Logger, ds dataService.Da
 }
 
 // ==================== LOCATION HANDLERS ====================
-func setupLocationHandlers(mux *http.ServeMux, logger *log.Logger, ls dataService.LocationService) error {
+func setupLocationHandlers(mux *http.ServeMux, sf *service.ServiceFactory, logger *log.Logger) error {
+	ls, err := sf.CreateLocationService()
+	if err != nil {
+		return err
+	}
+
 	mux.HandleFunc("/locations", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:

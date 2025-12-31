@@ -1,7 +1,5 @@
 package models
 
-// Though this file is named data, it contains only the sound data.
-
 import (
 	"context"
 	"time"
@@ -9,14 +7,16 @@ import (
 
 type Data struct {
 	ID          int     `json:"id,omitempty"`
-	DeviceID    string  `json:"device_id"`             // Arduino device ID
-	RoomName    string  `json:"room_name"`             // Name of the working room
-	SoundLevel  float64 `json:"sound_level"`           // Level of sound in dB
-	Threshold   float64 `json:"threshold"`             // Threshold level in dB
-	MeasureTime string  `json:"measure_time"`          // Time of measurement
-	IsAlert     bool    `json:"is_alert"`              // Whether the sound level exceeds the threshold
-	Description string  `json:"description"`           // Additional information
-	IsPeriodic  bool    `json:"is_periodic,omitempty"` // Is the data constantly/periodically measured
+	DeviceID    string  `json:"device_id"`    // Arduino device ID
+	RoomName    string  `json:"room_name"`    // Name of the working room
+	SoundLevel  float64 `json:"sound_level"`  // Level of sound in dB
+	Threshold   float64 `json:"threshold"`    // Threshold level in dB
+	MeasureTime string  `json:"measure_time"` // Time of measurement
+	IsAlert     bool    `json:"is_alert"`     // Whether the sound level exceeds the threshold
+	// Need to figure out how to make this be calculated and filled by the soundlevel&threshold system
+	// Done and tested but I feel like it's too rough. If needed, check internal\api\repository\DAL\SQLite\data.go line 115 for the logic fot this.
+	Description string `json:"description"`           // Additional information
+	IsPeriodic  bool   `json:"is_periodic,omitempty"` // Is the data constantly/periodically measured
 }
 
 type DataRepository interface {
@@ -28,6 +28,6 @@ type DataRepository interface {
 	Update(data *Data, ctx context.Context) (int64, error)
 	Delete(data *Data, ctx context.Context) (int64, error)
 	GetDailySummary(roomName string, date time.Time, ctx context.Context) ([]*Data, error) // To retreive daily summary statistics
-	GetByRoom(roomName string, ctx context.Context) ([]*Data, error)                       // To retrieve data by room name
+	GetByRoom(roomName string, ctx context.Context) ([]*Data, error)                       // (For now only for future implementation.)To retrieve data for a specific room
 	ExecContext(ctx context.Context, query string, args ...interface{}) (int64, error)
 }

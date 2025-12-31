@@ -1,7 +1,14 @@
+**/
+
+!build/
+
+!backend/
 *.exe
 *.exe~
 *.test
-.vscode/
-frontend/
-.env
+*_test.go
 production.log
+
+.env
+
+package-lock.json

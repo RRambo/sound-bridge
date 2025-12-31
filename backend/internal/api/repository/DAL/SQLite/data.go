@@ -142,9 +142,7 @@ func Close(ctx context.Context, r *DataRepository) {
 
 	<-ctx.Done()
 	r.createStmt.Close()
-	r.upsertLatestStmt.Close()
 	r.readStmt.Close()
-	r.ReadLatestStmt.Close()
 	r.updateStmt.Close()
 	r.deleteStmt.Close()
 	r.readManyStmt.Close()

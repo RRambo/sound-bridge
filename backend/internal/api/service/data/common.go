@@ -20,15 +20,6 @@ type DataService interface {
 	CleanOldData(ctx context.Context) error
 }
 
-type LocationService interface {
-	CreateLocation(location *models.Location) error
-	GetAllLocations() ([]*models.Location, error)
-	GetChosenLocation() (*models.Location, error)
-	SetChosenLocation(id int) error
-	UpdateThreshold(id int, newThreshold float64) error
-	DeleteLocation(location *models.Location, ctx context.Context) (int64, error)
-}
-
 type DataError struct {
 	Message string
 }
