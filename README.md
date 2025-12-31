@@ -22,7 +22,7 @@ And a **request body** that looks like this:
 }
 ```
 ## Data Model
-The **IsPeriodic** field determines whether the data is for the charts or the current noise level at the top of the UI.<br> `true`=chart, `false`=current noise level  
+The **IsPeriodic** field determines whether the data is for the charts or the current noise level.<br> `true`=chart, `false`=current noise level  
 Only the sound_level is required (a float between 0 and 150 `xx.xx`)
 ```json
 {
