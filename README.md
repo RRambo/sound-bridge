@@ -15,13 +15,13 @@ password: passwordkids
 And a **data model** that looks like this:
 ```json
 {
-    "sound_level": 67.45, // xx.xx sound level in decibels as a float
+    "sound_level": 67.45,
     "IsPeriodic": true
 }
 ```
 ## Data Model
 The IsPeriodic field determines whether the data is for the charts or the current noise level at the top of the UI (true=chart, false=current noise level).
-<br>Only the sound_level is required (a float between 0 and 150)
+<br>Only the sound_level is required (a float between 0 and 150 (xx.xx))
 ```json
 {
   "id": 1,
