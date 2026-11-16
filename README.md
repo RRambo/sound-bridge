@@ -3,7 +3,16 @@ This repository only contains a **build version** of the [Noise Meter Server](ht
 
 This web service is currently hosted in render and anyone can test it here [sound-bridge.onrender.com](https://sound-bridge.onrender.com/)
 
-> The render instance used here is free and will spin down with inactivity, which can delay requests by 50+ seconds. 
+> The render instance used here is free and will spin down with inactivity, which can delay requests by 50+ seconds.
+
+The target group for this project was schools, private daycares and municipal childhood education. This project was meant to measure, display and record a summary of the noise level in a classroom, which could be used to improve activity -and group plans to reduce noise and positively affect early childhood education. 
+
+## Images of the UI (with data)
+![Screenshot of the User Interface with data including the daily summary.](<images/UI_Full.png>)
+
+![Screenshot of the User Interface with data including the weekly summary and quiet time.](<images/UI_WeeklySummary.png>)
+
+---
 
 Data can be posted to 'https://sound-bridge.onrender.com/api/data'
 with the following headers  
@@ -38,15 +47,5 @@ Only the sound_level is required (a float between 0 and 150 `xx.xx`)
 }
 ```
 
-## Images of the UI (with data)
-![Screenshot of the User Interface with data including the daily summary.](<images/UI_Full.png>)
-
-![Screenshot of the User Interface with data including the weekly summary and quiet time.](<images/UI_WeeklySummary.png>)
-
-## License
-
-Educational project for Intelligent Devices course.
-
 ---
-
 **Last Updated:** 31/12/2025
